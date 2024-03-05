@@ -1,1 +1,1 @@
-# Java-Track-project-app
+# FOQS Academy
