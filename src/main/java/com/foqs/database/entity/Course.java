@@ -4,6 +4,9 @@ package com.foqs.database.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.List;
+import java.util.Set;
+
 @Entity
 @Table(name = "courses")
 public class Course {
@@ -18,6 +21,12 @@ public class Course {
     @NotBlank(message = "Course title has to be filled")
     @Column
     private String title;
+
+    @OneToMany(mappedBy = "course", orphanRemoval = true,  cascade = CascadeType.ALL)
+    private List<Lesson> lessons;
+
+    @ManyToMany
+    private Set<User> users;
 
     public Course() {
     }
@@ -49,5 +58,12 @@ public class Course {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public List<Lesson> getLessons(){
+        return lessons;
+    }
+    public void setLessons(List<Lesson> lessons){
+        this.lessons = lessons;
     }
 }

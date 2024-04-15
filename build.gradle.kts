@@ -21,6 +21,7 @@ dependencies {
 	implementation("jakarta.validation:jakarta.validation-api:3.0.2")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.postgresql:postgresql")
+	implementation("com.github.gavlyukovskiy:datasource-proxy-spring-boot-starter:1.9.1")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
