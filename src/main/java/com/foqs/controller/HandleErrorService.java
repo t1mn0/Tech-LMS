@@ -23,15 +23,14 @@ public class HandleErrorService {
     }
 
     @ExceptionHandler
-    public ResponseEntity<ApiError> MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException ex){
+    public ResponseEntity<ApiError> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException ex){
         String errorMessage = ex.getBindingResult().getFieldErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .filter(Objects::nonNull)
                 .findFirst()
                 .orElse("Validation failed");
-        ApiError apiError = new ApiError(errorMessage);
         return new ResponseEntity<>(
-                apiError,
+                new ApiError(errorMessage),
                 HttpStatus.FORBIDDEN
         );
     }

@@ -13,7 +13,7 @@ import java.util.List;
 import static java.util.Objects.requireNonNullElse;
 
 @RestController
-@RequestMapping("/course")
+@RequestMapping("/courses")
 public class CourseController {
 
     private final CourseRepository courseRepository;

@@ -1,19 +1,22 @@
 package com.foqs.database.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
+@Table(name = "courses")
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Course author has to be filled")
+    @Column
     private String author;
 
+    @NotBlank(message = "Course title has to be filled")
+    @Column
     private String title;
 
     public Course() {
