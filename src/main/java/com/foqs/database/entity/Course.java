@@ -36,6 +36,7 @@ public class Course {
         this.title = title;
     }
 
+    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -65,5 +66,23 @@ public class Course {
     }
     public void setLessons(List<Lesson> lessons){
         this.lessons = lessons;
+    }
+
+    public Set<User> getUsers(){
+        return this.users;
+    }
+
+    public void setUsers(Set<User> users){
+        this.users = users;
+    }
+
+    public void addLesson(Lesson lesson) {
+        lesson.setCourse(this);
+        this.lessons.add(lesson);
+    }
+
+    public void deleteLesson(Lesson lesson) {
+        this.lessons.remove(lesson);
+        lesson.setCourse(null);
     }
 }
