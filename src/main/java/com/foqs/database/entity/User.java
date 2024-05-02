@@ -51,6 +51,10 @@ public class User {
         this.courses = courses;
     }
 
+    public void addCourse(Course course) {
+        course.getUsers().add(this);
+        this.courses.add(course);
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
