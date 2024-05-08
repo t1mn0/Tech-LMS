@@ -54,6 +54,9 @@ public class User {
     private User deletionAuthor;
 
     @Column
+    private int positionInCourseRating;
+
+    @Column
     private boolean isAdmin;
 
     @ManyToMany(mappedBy = "users")
@@ -161,6 +164,14 @@ public class User {
 
     public void setLastUpdateAuthor(User lastModificationAuthor) {
         this.lastModificationAuthor = lastModificationAuthor;
+    }
+
+    public int getPositionInCourseRating() {
+        return positionInCourseRating;
+    }
+
+    public void setPositionInCourseRating(int positionInCourseRating) {
+        this.positionInCourseRating = positionInCourseRating;
     }
 
     public Date getDeletionDate() {
