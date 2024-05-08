@@ -1,17 +1,19 @@
 package com.foqs.database.entity;
 
 import jakarta.persistence.*;
-
-import java.sql.Date;
-import java.util.List;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "lessons")
-public class Lesson {
+@Table(name = "tasks")
+public class Task {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column
+    private String type;
 
     @Column
     private String title;
@@ -45,14 +47,10 @@ public class Lesson {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "module_id")
-    private Module module;
+    @JoinColumn(name = "lesson_id")
+    private Lesson lesson;
 
-    @OneToMany(mappedBy = "lesson", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Task> tasks;
-
-
-    public Lesson(){}
+    public Task(){}
 
     public Long getId() {
         return id;
@@ -60,6 +58,14 @@ public class Lesson {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getTitle() {
@@ -134,38 +140,20 @@ public class Lesson {
         this.content = content;
     }
 
-    public Module getModule() {
-        return module;
+    public Lesson getLesson() {
+        return lesson;
     }
 
-    public void setModule(Module module) {
-        this.module = module;
-    }
-
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
-    }
-
-    public void addTask(Task task) {
-        task.setLesson(this);
-        this.tasks.add(task);
-    }
-
-    public void deleteTask(Task task) {
-        this.tasks.remove(task);
-        task.setLesson(null);
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Lesson lesson = (Lesson) o;
-        return id.equals(lesson.id);
+        Task task = (Task) o;
+        return id.equals(task.id);
     }
 
     @Override
@@ -173,3 +161,4 @@ public class Lesson {
         return Objects.hash(id);
     }
 }
+

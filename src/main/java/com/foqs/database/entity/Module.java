@@ -1,14 +1,14 @@
 package com.foqs.database.entity;
 
 import jakarta.persistence.*;
-
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "lessons")
-public class Lesson {
+@Table(name = "modules")
+public class Module {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,19 +40,14 @@ public class Lesson {
     @JoinColumn(name = "deletion_author_id")
     private User deletionAuthor;
 
-    @Lob
-    @Column
-    private String content;
+    @OneToMany(mappedBy = "module", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Lesson> lessons;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "module_id")
-    private Module module;
+    @JoinColumn(name = "course_id")
+    private Course course;
 
-    @OneToMany(mappedBy = "lesson", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Task> tasks;
-
-
-    public Lesson(){}
+    public Module(){}
 
     public Long getId() {
         return id;
@@ -126,46 +121,38 @@ public class Lesson {
         this.deletionAuthor = deletionAuthor;
     }
 
-    public String getContent() {
-        return content;
+    public List<Lesson> getLessons() {
+        return lessons;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
     }
 
-    public Module getModule() {
-        return module;
+    public Course getCourse(){
+        return this.course;
     }
 
-    public void setModule(Module module) {
-        this.module = module;
+    public void setCourse(Course course){
+        this.course = course;
     }
 
-    public List<Task> getTasks() {
-        return tasks;
+    public void addLesson(Lesson lesson) {
+        lesson.setModule(this);
+        this.lessons.add(lesson);
     }
 
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
-    }
-
-    public void addTask(Task task) {
-        task.setLesson(this);
-        this.tasks.add(task);
-    }
-
-    public void deleteTask(Task task) {
-        this.tasks.remove(task);
-        task.setLesson(null);
+    public void deleteLesson(Lesson lesson) {
+        this.lessons.remove(lesson);
+        lesson.setModule(null);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Lesson lesson = (Lesson) o;
-        return id.equals(lesson.id);
+        Module module = (Module) o;
+        return id.equals(module.id);
     }
 
     @Override
